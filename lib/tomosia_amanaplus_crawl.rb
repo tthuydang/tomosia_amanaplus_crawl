@@ -42,7 +42,6 @@ module TomosiaAmanaplusCrawl
     
         pagination_images_listings.each do |img|
           if curr_index > max
-            puts "-----index: #{curr_index}"
             return images
           end
 
@@ -104,5 +103,3 @@ module TomosiaAmanaplusCrawl
 
   end
 end
-
-TomosiaAmanaplusCrawl::Crawler.new.run("hoian", "./", 12321)
