@@ -1,11 +1,12 @@
 require "tomosia_amanaplus_crawl/version"
-require 'nokogiri'
-require 'httparty'
-require 'open-uri'
-require 'fileutils'
-require 'spreadsheet'
 
 module TomosiaAmanaplusCrawl
+  require 'nokogiri'
+  require 'httparty'
+  require 'open-uri'
+  require 'fileutils'
+  require 'spreadsheet'
+
   class Crawler
     URL = "https://plus.amanaimages.com/items/search/"
 
@@ -23,7 +24,6 @@ module TomosiaAmanaplusCrawl
 
     def getPaginationImages(images_listings, pages, keyword)  # lấy tất cả image của các page cộng lại
       images = Array.new
-      i = 0
       curr_page = 1
       while curr_page <= pages
         puts "Crawling page #{curr_page}..........."
@@ -41,7 +41,6 @@ module TomosiaAmanaplusCrawl
             extension: ".#{src.to_s.split('.').last}"
           }
           images << current_image
-          # puts "#{i += 1}: #{src}"
         end
     
         curr_page += 1
