@@ -10,6 +10,9 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem 'tomosia_amanaplus_crawl'
+gem 'httparty'
+gem 'nokogiri'
+gem 'spreadsheet'
 ```
 
 And then execute:
@@ -22,7 +25,12 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+    require 'tomosia_amanaplus_crawl'
+    TomosiaAmanaplusCrawl::Crawler.new.run(keyword, path)
+```
+    keyword: hoian, danang, ...
+    path: './', '/desktop/', ...
 
 ## Development
 
