@@ -9,4 +9,3 @@ gem "rspec", "~> 3.0"
 gem 'httparty'
 gem 'nokogiri'
 gem 'spreadsheet'
-gem 'byebug'
