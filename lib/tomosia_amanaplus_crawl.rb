@@ -10,21 +10,29 @@ module TomosiaAmanaplusCrawl
   class Crawler
     URL = "https://plus.amanaimages.com/items/search/"
 
-    def run(keyword, destination)
+    def run(keyword, destination, max)
       unparsed_page = HTTParty.get("#{URL}/#{keyword}")
       parsed_page = Nokogiri::HTML(unparsed_page)
 
       pages = parsed_page.css("div.c-paginate__nums").css('a').last.text.to_i # tổng số page
       images_listings = parsed_page.css("div.p-search-result__body") # danh sách các thẻ div chứa image
+    
+      # lấy tổng số image
+      total = parsed_page.css("h1.p-search-result__ttl").text.split(' ').first
+      total = total[11..(total.length - 1)].chop.chop.chop.sub(',', '').to_i
+      if max > total # nếu max lớn hơn total thì max = total => vẫn lấy hết
+        max = total
+      end
 
-      images = getPaginationImages(images_listings, pages, keyword)
+      images = getPaginationImages(images_listings, pages, keyword, max)
       downloadImages(images, destination)
       writeToExcel(images, destination)
     end
 
-    def getPaginationImages(images_listings, pages, keyword)  # lấy tất cả image của các page cộng lại
+    def getPaginationImages(images_listings, pages, keyword, max)  # lấy tất cả image của các page cộng lại
       images = Array.new
       curr_page = 1
+      curr_index = 1
       while curr_page <= pages
         puts "Crawling page #{curr_page}..........."
     
@@ -33,6 +41,11 @@ module TomosiaAmanaplusCrawl
         pagination_images_listings = pagination_parsed_page.css("div.p-item-thumb")
     
         pagination_images_listings.each do |img|
+          if curr_index > max
+            puts "-----index: #{curr_index}"
+            return images
+          end
+
           src = img.css('img').attr('data-src').nil? == true ? img.css('img').attr('src') : img.css('img').attr('data-src')
           current_image = {
             title: img.css('a')[1].attr('title'),
@@ -41,6 +54,7 @@ module TomosiaAmanaplusCrawl
             extension: ".#{src.to_s.split('.').last}"
           }
           images << current_image
+          curr_index += 1
         end
     
         curr_page += 1
@@ -90,3 +104,5 @@ module TomosiaAmanaplusCrawl
 
   end
 end
+
+TomosiaAmanaplusCrawl::Crawler.new.run("hoian", "./", 12321)
