@@ -10,9 +10,6 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem 'tomosia_amanaplus_crawl'
-gem 'httparty'
-gem 'nokogiri'
-gem 'spreadsheet'
 ```
 
 And then execute:
