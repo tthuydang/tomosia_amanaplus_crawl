@@ -19,7 +19,7 @@ module TomosiaAmanaplusCrawl
     
       # lấy tổng số image
       total = parsed_page.css("h1.p-search-result__ttl").text.split(' ').first
-      total = total[11..(total.length - 1)].chop.chop.chop.sub(',', '').to_i
+      total = total[(6 + keyword.length)..(total.length - 1)].chop.chop.chop.gsub(',', '').to_i
       if max > total # nếu max lớn hơn total thì max = total => vẫn lấy hết
         max = total
       end
@@ -70,13 +70,23 @@ module TomosiaAmanaplusCrawl
       print "\nDownloading"
       images.each do |curr_image|
         threads << Thread.new(curr_image) {
-          open(curr_image[:url]) do |image|
-            File.open("#{path}/#{curr_image[:url].split('/').last}", "a+") do |file|
-              file.write(image.read) # lưu hình ảnh
-              curr_image[:size] = image.size # cập nhật lại size trong mảng images
-              print "."
+          timeout = 0
+          begin
+            open(curr_image[:url]) do |image|
+              File.open("#{path}/#{curr_image[:url].split('/').last}", "a+") do |file|
+                file.write(image.read) # lưu hình ảnh
+                curr_image[:size] = image.size # cập nhật lại size trong mảng images
+                print "."
+              end
+            end # end open
+          rescue => exception
+            if timeout < 3
+              timeout += 1
+              retry
+            else
+              next
             end
-          end # end open
+          end
         }
       end
       threads.each { |t| t.join }
@@ -103,3 +113,4 @@ module TomosiaAmanaplusCrawl
 
   end
 end
+TomosiaAmanaplusCrawl::Crawler.new.run("love", "./", 3210)
