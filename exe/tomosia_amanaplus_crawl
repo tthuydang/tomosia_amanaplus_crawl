@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'tomosia_amanaplus_crawl/cli'
+
+TomosiaAmanaplusCrawl::Cli.start

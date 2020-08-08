@@ -1,10 +1,11 @@
 PATH
   remote: .
   specs:
-    tomosia_amanaplus_crawl (0.1.5)
+    tomosia_amanaplus_crawl (0.1.8)
       httparty (= 0.18.1)
       nokogiri (= 1.10.10)
       spreadsheet (= 1.2.6)
+      thor
 
 GEM
   remote: https://rubygems.org/
@@ -37,6 +38,7 @@ GEM
     ruby-ole (1.2.12.2)
     spreadsheet (1.2.6)
       ruby-ole (>= 1.0)
+    thor (1.0.1)
 
 PLATFORMS
   ruby

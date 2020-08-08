@@ -23,9 +23,9 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-    require 'tomosia_amanaplus_crawl'
-    TomosiaAmanaplusCrawl::Crawler.new.run(keyword, path, max)
+    tomosia_amanaplus_crawl crawl "keyword" --destination "./lib" --max=123
 ```
+    Example: tomosia_amanaplus_crawl crawl "hoian" --destination "./" --max=123
     keyword: hoian, danang, ...
     path: './', '/desktop/', ...
     max: số lượng ảnh muốn lấy về. Nếu max lớn hơn tổng số ảnh các page thì vẫn lấy hết tất cả ảnh

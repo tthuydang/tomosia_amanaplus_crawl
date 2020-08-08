@@ -8,7 +8,7 @@ module TomosiaAmanaplusCrawl
   require 'spreadsheet'
 
   class Crawler
-    URL = "https://plus.amanaimages.com/items/search/"
+    URL = "https://plus.amanaimages.com/items/search"
 
     def run(keyword, destination, max)
       unparsed_page = HTTParty.get("#{URL}/#{keyword}")
