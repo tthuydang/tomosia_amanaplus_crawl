@@ -113,4 +113,3 @@ module TomosiaAmanaplusCrawl
 
   end
 end
-TomosiaAmanaplusCrawl::Crawler.new.run("love", "./", 3210)
