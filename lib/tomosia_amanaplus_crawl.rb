@@ -11,7 +11,7 @@ module TomosiaAmanaplusCrawl
     URL = "https://plus.amanaimages.com/items/search"
 
     def run(keyword, destination, max)
-      unparsed_page = HTTParty.get("#{URL}/#{keyword}")
+      unparsed_page = open("#{URL}/#{keyword}").read
       parsed_page = Nokogiri::HTML(unparsed_page)
 
       pages = parsed_page.css("div.c-paginate__nums").css('a').last.text.to_i # tổng số page
@@ -36,7 +36,7 @@ module TomosiaAmanaplusCrawl
       while curr_page <= pages
         puts "Crawling page #{curr_page}..........."
     
-        pagination_unparsed_page = HTTParty.get("https://plus.amanaimages.com/items/search/#{keyword}?page=#{curr_page}")
+        pagination_unparsed_page = open("#{URL}/#{keyword}?page=#{curr_page}").read
         pagination_parsed_page = Nokogiri::HTML(pagination_unparsed_page)
         pagination_images_listings = pagination_parsed_page.css("div.p-item-thumb")
     
@@ -72,7 +72,7 @@ module TomosiaAmanaplusCrawl
         threads << Thread.new(curr_image) {
           timeout = 0
           begin
-            open(curr_image[:url]) do |image|
+            URI.open(curr_image[:url]) do |image|
               File.open("#{path}/#{curr_image[:url].split('/').last}", "a+") do |file|
                 file.write(image.read) # lưu hình ảnh
                 curr_image[:size] = image.size # cập nhật lại size trong mảng images

@@ -23,7 +23,7 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-    tomosia_amanaplus_crawl crawl "keyword" --destination "./lib" --max=123
+    tomosia_amanaplus_crawl crawl "keyword" --destination "/home/usr/Documents" --max=123
 ```
     Example: tomosia_amanaplus_crawl crawl "hoian" --destination "./" --max=123
     keyword: hoian, danang, ...
