@@ -62,7 +62,7 @@ module TomosiaAmanaplusCrawl
 
     # tải hình và cập nhật lại size
     def downloadImages(images, destination)
-      path = "#{destination}/Downloads"       # lưu hình ở folder Downloads
+      path = "#{destination}//Downloads"       # lưu hình ở folder Downloads
       Dir.mkdir path unless File.exist? path
 
       threads = []
@@ -93,7 +93,7 @@ module TomosiaAmanaplusCrawl
     end
 
     def writeToExcel(images, destination)
-      path = "#{destination}/File Excel"      # lưu file ở folder File Excel
+      path = "#{destination}//File Excel"      # lưu file ở folder File Excel
       Dir.mkdir path unless File.exist? path
 
       book = Spreadsheet::Workbook.new
