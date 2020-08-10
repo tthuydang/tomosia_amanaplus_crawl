@@ -2,7 +2,6 @@ require "tomosia_amanaplus_crawl/version"
 
 module TomosiaAmanaplusCrawl
   require 'nokogiri'
-  require 'httparty'
   require 'open-uri'
   require 'fileutils'
   require 'spreadsheet'

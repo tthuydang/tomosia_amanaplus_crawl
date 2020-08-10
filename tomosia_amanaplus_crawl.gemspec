@@ -14,7 +14,6 @@ Gem::Specification.new do |spec|
   spec.executables   = 'tomosia_amanaplus_crawl'
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency('httparty', '0.18.1')
   spec.add_runtime_dependency('nokogiri', '1.10.10')
   spec.add_runtime_dependency('spreadsheet', '1.2.6')
   spec.add_runtime_dependency('thor')
