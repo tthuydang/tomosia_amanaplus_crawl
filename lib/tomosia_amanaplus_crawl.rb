@@ -15,11 +15,11 @@ module TomosiaAmanaplusCrawl
 
       pages = parsed_page.css("div.c-paginate__nums").css('a').last.text.to_i # tổng số page
       images_listings = parsed_page.css("div.p-search-result__body") # danh sách các thẻ div chứa image
-    
+
       # lấy tổng số image
       total = parsed_page.css("h1.p-search-result__ttl").text.split(' ').first
       total = total[(6 + keyword.length)..(total.length - 1)].chop.chop.chop.gsub(',', '').to_i
-      if max > total # nếu max lớn hơn total thì max = total => vẫn lấy hết
+      if max == nil || max > total # nếu max lớn hơn total thì max = total => vẫn lấy hết
         max = total
       end
 
@@ -34,11 +34,11 @@ module TomosiaAmanaplusCrawl
       curr_index = 1
       while curr_page <= pages
         puts "Crawling page #{curr_page}..........."
-    
+
         pagination_unparsed_page = open("#{URL}/#{keyword}?page=#{curr_page}").read
         pagination_parsed_page = Nokogiri::HTML(pagination_unparsed_page)
         pagination_images_listings = pagination_parsed_page.css("div.p-item-thumb")
-    
+
         pagination_images_listings.each do |img|
           if curr_index > max
             return images
@@ -54,7 +54,7 @@ module TomosiaAmanaplusCrawl
           images << current_image
           curr_index += 1
         end
-    
+
         curr_page += 1
       end
       images
@@ -75,7 +75,7 @@ module TomosiaAmanaplusCrawl
               File.open("#{path}/#{curr_image[:url].split('/').last}", "a+") do |file|
                 file.write(image.read) # lưu hình ảnh
                 curr_image[:size] = image.size # cập nhật lại size trong mảng images
-                print "."
+                print '.'
               end
             end # end open
           rescue => exception
@@ -99,10 +99,9 @@ module TomosiaAmanaplusCrawl
       book = Spreadsheet::Workbook.new
       sheet1 = book.create_worksheet
 
-      i = 0
       sheet1.row(0).concat %w{Title Url Size(bytes) Extension}
       puts "Writing..........."
-      images.each do |img|
+      images.each_with_index do |img, i|
         sheet1.row(i += 1).push img[:title], img[:url], img[:size], img[:extension]
       end
       puts "Writed."

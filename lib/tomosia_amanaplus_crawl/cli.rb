@@ -8,7 +8,7 @@ module TomosiaAmanaplusCrawl
     option :destination
     option :max
     def crawl(keyword)
-      TomosiaAmanaplusCrawl::Crawler.new.run(keyword, options[:destination], options[:max].to_i)
+      TomosiaAmanaplusCrawl::Crawler.new.run(keyword, options[:destination], options[:max] == nil ? nil : options[:max].to_i)
     end
   end
 end
